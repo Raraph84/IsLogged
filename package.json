@@ -16,6 +16,24 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prettier": "^3.9.4",
     "typescript": "^5"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "printWidth": 120,
+    "overrides": [
+      {
+        "files": [
+          "package.json",
+          "package-lock.json",
+          "tsconfig.json"
+        ],
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
   }
 }
