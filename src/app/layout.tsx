@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Create Next App"
+    title: "is.login.logged.fr"
 };
 
 export default function RootLayout({
@@ -10,7 +10,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="fr">
+        <html lang="en">
             <body>{children}</body>
         </html>
     );
