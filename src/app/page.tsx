@@ -3,6 +3,7 @@
 import moment from "moment";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import "./style.scss";
 
 export default function Home() {
     const searchParams = useSearchParams();
