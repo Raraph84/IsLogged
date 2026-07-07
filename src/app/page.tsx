@@ -5,20 +5,24 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "./style.scss";
 
+const getHostnameLogin = () => {
+    const hostname = document.location.hostname;
+    const split = hostname.split(".");
+    if (split.length === 4 && hostname.startsWith("is.") && hostname.endsWith(".logged.fr")) return split[1];
+    if (split.length === 4 && hostname.endsWith(".is.logged.fr")) return split[0];
+    if (split.length === 3 && hostname.endsWith(".logged.fr")) return split[0];
+    return null;
+};
+
 export default function Home() {
     const searchParams = useSearchParams();
     const [login, setLogin] = useState(searchParams.get("login") ?? "norminet");
     const [location, setLocation] = useState<{ location: string | null; since: string | null } | null>(null);
 
     useEffect(() => {
-        const hostname = document.location.hostname;
-        if (
-            hostname.split(".").length === 4 &&
-            hostname.startsWith("is.") &&
-            hostname.endsWith(".logged.fr") &&
-            login !== hostname.split(".")[1]
-        ) {
-            setLogin(hostname.split(".")[1]);
+        const hostnameLogin = getHostnameLogin();
+        if (hostnameLogin && login !== hostnameLogin) {
+            setLogin(hostnameLogin);
             return;
         }
 
@@ -34,7 +38,7 @@ export default function Home() {
             const location = await res.json();
             setLocation(location);
             if (location.location) document.title = login + " is logged at " + location.location;
-            else document.title = login + " is not logged.";
+            else document.title = login + " is not logged";
         })();
     }, [login]);
 
