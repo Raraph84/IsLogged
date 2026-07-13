@@ -17,7 +17,7 @@ const getHostnameLogin = () => {
 export default function Home() {
     const searchParams = useSearchParams();
     const [login, setLogin] = useState(searchParams.get("login") ?? "norminet");
-    const [location, setLocation] = useState<{ location: string | null; since: string | null } | null>(null);
+    const [location, setLocation] = useState<{ host: string | null; startTime: string | null } | null>(null);
 
     useEffect(() => {
         const hostnameLogin = getHostnameLogin();
@@ -37,19 +37,19 @@ export default function Home() {
 
             const location = await res.json();
             setLocation(location);
-            if (location.location) document.title = login + " is logged at " + location.location;
+            if (location.host) document.title = login + " is logged at " + location.host;
             else document.title = login + " is not logged";
         })();
     }, [login]);
 
     if (!location) return <h3>Loading... (our intra might be slow)</h3>;
-    if (!location.location) return <h1>{login} is not logged</h1>;
+    if (!location.host) return <h1>{login} is not logged</h1>;
     return (
         <>
             <h1>
-                {login} is logged at {location.location}
+                {login} is logged at {location.host}
             </h1>
-            <h3>Since {moment(location.since).format("DD/MM/YYYY HH:mm:ss")}</h3>
+            <h3>Since {moment(location.startTime).format("DD/MM/YYYY HH:mm:ss")}</h3>
         </>
     );
 }
